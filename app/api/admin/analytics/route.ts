@@ -82,13 +82,13 @@ export async function GET(request: NextRequest) {
       Array<{ date: Date; total: number; count: number }>
     >`
       SELECT 
-        DATE(created_at) as date,
+        DATE("createdAt") as date,
         SUM(total) as total,
         COUNT(*) as count
       FROM "Order"
-      WHERE created_at >= ${startDate}
+      WHERE "createdAt" >= ${startDate}
         AND status IN ('PROCESSING', 'SHIPPED', 'DELIVERED')
-      GROUP BY DATE(created_at)
+      GROUP BY DATE("createdAt")
       ORDER BY date ASC
     `;
 
