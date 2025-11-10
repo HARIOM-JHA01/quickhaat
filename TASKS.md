@@ -136,37 +136,7 @@ Create a multi-step checkout flow with address management, payment integration, 
 
 **Objectives:**
 
-- [ ] Create checkout page with multi-step form
-- [ ] Step 1: Shipping address (select/add new)
-- [ ] Step 2: Delivery method selection
-- [ ] Step 3: Payment method selection
-- [ ] Step 4: Order review and confirmation
-- [ ] Integrate Stripe payment gateway
-- [ ] Create order confirmation page
-- [ ] Send order confirmation emails
-- [ ] Generate unique order numbers
-- [ ] Create orders API endpoints
-- [ ] Implement order tracking page
-- [ ] Build customer order history page (`/account/orders`)
-- [ ] Add invoice generation (PDF)
-- [ ] Handle payment webhooks
-- [ ] Implement inventory reduction on order
-
 **Files to Create:**
-
-- `app/checkout/page.tsx` - Checkout page
-- `app/checkout/success/page.tsx` - Order success page
-- `app/account/orders/page.tsx` - Order history
-- `app/account/orders/[id]/page.tsx` - Order details
-- `app/api/orders/route.ts` - Create/list orders
-- `app/api/orders/[id]/route.ts` - Get order details
-- `app/api/checkout/session/route.ts` - Create Stripe session
-- `app/api/webhooks/stripe/route.ts` - Stripe webhook handler
-- `components/checkout/address-form.tsx` - Address form component
-- `components/checkout/payment-form.tsx` - Payment form
-- `components/checkout/order-summary.tsx` - Order summary
-- `lib/stripe.ts` - Stripe client configuration
-- `lib/email/order-confirmation.tsx` - Email template
 
 **Dependencies:**
 
@@ -185,39 +155,10 @@ bun add resend @react-email/components
 **Description:**
 Create advanced search and filtering functionality with faceted search, price ranges, and sorting options.
 
-**Objectives:**
-
-- [ ] Implement global search bar in navbar
-- [ ] Create search results page (`/search`)
-- [ ] Add advanced filters (category, brand, price range, rating)
-- [ ] Implement sorting (price, popularity, newest, rating)
-- [ ] Add price range slider
-- [ ] Show active filters with remove option
-- [ ] Display result count
-- [ ] Implement pagination
-- [ ] Add "No results" state with suggestions
-- [ ] Integrate Algolia or Meilisearch for fast search
-- [ ] Add search autocomplete/suggestions
-- [ ] Implement faceted search with counts
-- [ ] Add search analytics tracking
-
 **Files to Create/Modify:**
 
 - `app/search/page.tsx` - Search results page
-- `components/search/search-bar.tsx` - Global search component
-- `components/search/search-filters.tsx` - Filter sidebar
-- `components/search/price-range-slider.tsx` - Price filter
-- `components/search/active-filters.tsx` - Active filter chips
-- `components/search/search-suggestions.tsx` - Autocomplete
-- `lib/search.ts` - Search utilities
-- `app/api/search/route.ts` - Search API endpoint
-- `app/api/search/suggestions/route.ts` - Autocomplete API
-
----
-
-### 6. Update Homepage to Fetch Data from Database
-
-**Labels:** `enhancement`, `database`, `high-priority`
+  **Labels:** `enhancement`, `database`, `high-priority`
 
 **Description:**
 Update the homepage to dynamically fetch products, categories, and collections from the database instead of using static data.
