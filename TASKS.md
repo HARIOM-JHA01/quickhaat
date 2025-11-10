@@ -204,7 +204,7 @@ Update the homepage to dynamically fetch products, categories, and collections f
 
 ---
 
-### 7. Update Shop Page to Fetch Data from Database
+### 7. Update Shop Page to Fetch Data from Database ✅
 
 **Labels:** `enhancement`, `database`, `high-priority`
 
@@ -213,18 +213,27 @@ Replace static product data with database queries on the shop page.
 
 **Objectives:**
 
-- [ ] Replace static product data with database queries
-- [ ] Implement server-side data fetching
-- [ ] Add loading states and suspense
-- [ ] Update filters to query database
-- [ ] Implement pagination with database
-- [ ] Add proper error handling
-- [ ] Optimize queries with proper includes
-- [ ] Cache product data for performance
+- [x] Replace static product data with database queries
+- [x] Implement server-side data fetching
+- [x] Add loading states and suspense
+- [x] Update filters to query database
+- [x] Implement pagination with database
+- [x] Add proper error handling
+- [x] Optimize queries with proper includes
+- [x] Add category filters with active state
+- [x] Implement sorting (newest, price, name, popularity)
+- [x] Display product counts per category
+- [x] Add empty state for no results
 
-**Files to Modify:**
+**Files Modified:**
 
-- `app/shop/page.tsx` - Update to fetch from database
+- `app/shop/page.tsx` - Updated to fetch from database ✅
+- Uses `DbProductCard` for Prisma compatibility ✅
+- Implements category toggle filters ✅
+- Server-side pagination with prev/next navigation ✅
+- Dynamic sorting with dropdown ✅
+
+**Notes:** Shop page now fully database-driven with category filtering, sorting options, and pagination. Shows 12 products per page with accurate counts. All gradient classes updated to match project conventions.
 
 ---
 
@@ -645,6 +654,7 @@ bun add next-intl
 - [x] **Task 4: Checkout Process and Order Management** ✨
 - [x] **Task 5: Product Search and Filtering System** ✨
 - [x] **Task 6: Update Homepage to Fetch Data from Database** ✨
+- [x] **Task 7: Update Shop Page to Fetch Data from Database** ✨
 
 ### In Progress 🔄
 
