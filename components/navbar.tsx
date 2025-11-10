@@ -17,21 +17,21 @@ export default function Navbar() {
 
         <nav className="hidden md:flex items-center gap-6">
           <Link
-            href="#"
+            href="/shop"
             className="text-sm font-medium hover:text-indigo-600 transition-colors relative group"
           >
             Shop
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300" />
           </Link>
           <Link
-            href="#"
+            href="/collections"
             className="text-sm font-medium hover:text-indigo-600 transition-colors relative group"
           >
             Collections
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 group-hover:w-full transition-all duration-300" />
           </Link>
           <Link
-            href="#"
+            href="/about"
             className="text-sm font-medium hover:text-indigo-600 transition-colors relative group"
           >
             About
