@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useState } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Card,
   CardContent,
@@ -12,26 +12,26 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, ShoppingBag, ArrowLeft, CheckCircle2 } from "lucide-react";
+} from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Loader2, ShoppingBag, ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError('');
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/auth/forgot-password", {
-        method: "POST",
+      const response = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
       });
@@ -39,12 +39,12 @@ export default function ForgotPasswordPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Something went wrong");
+        setError(data.error || 'Something went wrong');
       } else {
         setSuccess(true);
       }
     } catch (error) {
-      setError("An error occurred. Please try again.");
+      setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -67,7 +67,7 @@ export default function ForgotPasswordPage() {
           </CardTitle>
           <CardDescription className="text-center">
             {success
-              ? "Check your email for reset instructions"
+              ? 'Check your email for reset instructions'
               : "Enter your email address and we'll send you a reset link"}
           </CardDescription>
         </CardHeader>
@@ -102,7 +102,7 @@ export default function ForgotPasswordPage() {
                 />
               </div>
             </CardContent>
-            <CardFooter className="flex flex-col space-y-4">
+            <CardFooter className="flex flex-col space-y-4 mt-4">
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Send Reset Link
