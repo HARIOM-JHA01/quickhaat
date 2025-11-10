@@ -1,12 +1,13 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import bcrypt from "bcryptjs";
-import { z } from "zod";
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import bcrypt from 'bcryptjs';
+import { z } from 'zod';
+import { sendWelcomeEmail } from '@/lib/email-helpers';
 
 const signupSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
 });
 
 export async function POST(request: Request) {
@@ -20,7 +21,7 @@ export async function POST(request: Request) {
 
     if (existingUser) {
       return NextResponse.json(
-        { error: "User with this email already exists" },
+        { error: 'User with this email already exists' },
         { status: 400 }
       );
     }
@@ -32,9 +33,23 @@ export async function POST(request: Request) {
         name,
         email,
         password: hashedPassword,
-        role: "CUSTOMER",
+        role: 'CUSTOMER',
       },
     });
+
+    // Send welcome email (async, don't wait)
+    (async () => {
+      try {
+        await sendWelcomeEmail({
+          to: user.email,
+          customerName: user.name || 'Customer',
+        });
+        console.log(`Welcome email sent to ${user.email}`);
+      } catch (emailError) {
+        console.error('Error sending welcome email:', emailError);
+        // Don't fail registration if email fails
+      }
+    })();
 
     return NextResponse.json(
       {
@@ -54,9 +69,9 @@ export async function POST(request: Request) {
       );
     }
 
-    console.error("Signup error:", error);
+    console.error('Signup error:', error);
     return NextResponse.json(
-      { error: "An error occurred during signup" },
+      { error: 'An error occurred during signup' },
       { status: 500 }
     );
   }

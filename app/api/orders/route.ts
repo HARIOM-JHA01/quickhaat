@@ -1,12 +1,17 @@
-import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
-import { generateOrderNumber } from "@/lib/order-utils";
+import { NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+import { generateOrderNumber } from '@/lib/order-utils';
 import {
   calculateSubtotal,
   calculateTax,
   calculateShipping,
-} from "@/lib/cart-utils";
+} from '@/lib/cart-utils';
+import { sendOrderConfirmationEmail } from '@/lib/email-helpers';
+import {
+  generateInvoicePDF,
+  formatOrderForInvoice,
+} from '@/lib/invoice-generator';
 
 // GET /api/orders - Get all orders for the logged-in user
 export async function GET() {
@@ -14,7 +19,7 @@ export async function GET() {
     const session = await auth();
 
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const orders = await prisma.order.findMany({
@@ -28,7 +33,7 @@ export async function GET() {
               include: {
                 images: {
                   take: 1,
-                  orderBy: { position: "asc" },
+                  orderBy: { position: 'asc' },
                 },
               },
             },
@@ -37,15 +42,15 @@ export async function GET() {
         address: true,
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
     });
 
     return NextResponse.json(orders);
   } catch (error) {
-    console.error("Error fetching orders:", error);
+    console.error('Error fetching orders:', error);
     return NextResponse.json(
-      { error: "Failed to fetch orders" },
+      { error: 'Failed to fetch orders' },
       { status: 500 }
     );
   }
@@ -57,7 +62,7 @@ export async function POST(request: Request) {
     const session = await auth();
 
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const body = await request.json();
@@ -66,7 +71,7 @@ export async function POST(request: Request) {
     // Validate required fields
     if (!addressId || !paymentMethod) {
       return NextResponse.json(
-        { error: "Address and payment method are required" },
+        { error: 'Address and payment method are required' },
         { status: 400 }
       );
     }
@@ -81,7 +86,7 @@ export async function POST(request: Request) {
               include: {
                 images: {
                   take: 1,
-                  orderBy: { position: "asc" },
+                  orderBy: { position: 'asc' },
                 },
               },
             },
@@ -91,7 +96,7 @@ export async function POST(request: Request) {
     });
 
     if (!cart || cart.items.length === 0) {
-      return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
+      return NextResponse.json({ error: 'Cart is empty' }, { status: 400 });
     }
 
     // Verify address belongs to user
@@ -103,7 +108,7 @@ export async function POST(request: Request) {
     });
 
     if (!address) {
-      return NextResponse.json({ error: "Invalid address" }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid address' }, { status: 400 });
     }
 
     // Validate stock for all items
@@ -160,9 +165,9 @@ export async function POST(request: Request) {
           total,
           notes: notes || null,
           status:
-            paymentMethod === "CASH_ON_DELIVERY" ? "CONFIRMED" : "PENDING",
+            paymentMethod === 'CASH_ON_DELIVERY' ? 'CONFIRMED' : 'PENDING',
           paymentStatus:
-            paymentMethod === "CASH_ON_DELIVERY" ? "PENDING" : "PENDING",
+            paymentMethod === 'CASH_ON_DELIVERY' ? 'PENDING' : 'PENDING',
           items: {
             create: cart.items.map((item) => ({
               productId: item.productId,
@@ -181,7 +186,7 @@ export async function POST(request: Request) {
                 include: {
                   images: {
                     take: 1,
-                    orderBy: { position: "asc" },
+                    orderBy: { position: 'asc' },
                   },
                 },
               },
@@ -211,11 +216,76 @@ export async function POST(request: Request) {
       return newOrder;
     });
 
+    // Fetch complete order data with user information for email
+    const completeOrder = await prisma.order.findUnique({
+      where: { id: order.id },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+        items: true,
+        address: true,
+      },
+    });
+
+    // Send order confirmation email with invoice attachment (async, don't wait)
+    if (completeOrder) {
+      (async () => {
+        try {
+          // Generate invoice PDF
+          const invoiceData = formatOrderForInvoice(completeOrder);
+          const invoiceBuffer = await generateInvoicePDF(invoiceData);
+
+          // Send email with invoice attachment
+          await sendOrderConfirmationEmail({
+            to: completeOrder.user.email,
+            orderNumber: completeOrder.orderNumber,
+            customerName: completeOrder.user.name || 'Customer',
+            orderDate: new Date(completeOrder.createdAt).toLocaleDateString(
+              'en-US',
+              {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              }
+            ),
+            items: completeOrder.items.map((item) => ({
+              name: item.name,
+              quantity: item.quantity,
+              price: item.price,
+            })),
+            subtotal: completeOrder.subtotal,
+            shipping: completeOrder.shippingCost,
+            tax: completeOrder.tax,
+            total: completeOrder.total,
+            shippingAddress: {
+              street: completeOrder.address.street,
+              city: completeOrder.address.city,
+              state: completeOrder.address.state,
+              postalCode: completeOrder.address.postalCode,
+              country: completeOrder.address.country,
+            },
+            invoiceBuffer, // Attach PDF invoice
+          });
+
+          console.log(
+            `Order confirmation email sent to ${completeOrder.user.email}`
+          );
+        } catch (emailError) {
+          console.error('Error sending order confirmation email:', emailError);
+          // Don't fail the order creation if email fails
+        }
+      })();
+    }
+
     return NextResponse.json(order, { status: 201 });
   } catch (error) {
-    console.error("Error creating order:", error);
+    console.error('Error creating order:', error);
     return NextResponse.json(
-      { error: "Failed to create order" },
+      { error: 'Failed to create order' },
       { status: 500 }
     );
   }

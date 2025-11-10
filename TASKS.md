@@ -468,7 +468,7 @@ bun add uploadthing @uploadthing/react recharts date-fns xlsx
 
 ---
 
-### 12. Build User Account and Profile Management
+### 12. Build User Account and Profile Management ✅
 
 **Labels:** `feature`, `account`, `medium-priority`
 
@@ -477,27 +477,41 @@ Create user account pages for profile management, addresses, orders, and wishlis
 
 **Objectives:**
 
-- [ ] Create account layout with sidebar navigation
-- [ ] Profile page with edit functionality
-- [ ] Address management (add/edit/delete/set default)
-- [ ] Order history with filters
-- [ ] Wishlist page
-- [ ] Change password functionality
-- [ ] Account settings (email preferences, notifications)
-- [ ] Delete account option
+- [x] Create account layout with sidebar navigation
+- [x] Profile page with edit functionality
+- [x] Address management (add/edit/delete/set default)
+- [x] Order history with filters (already existed)
+- [x] Wishlist page
+- [x] Change password functionality
+- [x] Account settings (email preferences, notifications)
+- [ ] Delete account option (placeholder added)
 - [ ] Download personal data (GDPR compliance)
 - [ ] Two-factor authentication setup
 
-**Files to Create:**
+**Files Created:**
 
-- `app/account/layout.tsx` - Account layout with sidebar
-- `app/account/page.tsx` - Profile overview
-- `app/account/profile/page.tsx` - Edit profile
-- `app/account/addresses/page.tsx` - Address management
-- `app/account/orders/page.tsx` - Order history
-- `app/account/wishlist/page.tsx` - Wishlist
-- `app/account/security/page.tsx` - Password & security
-- `app/account/settings/page.tsx` - Account settings
+- `app/account/layout.tsx` - Account layout with sidebar ✅
+- `app/account/page.tsx` - Profile overview ✅
+- `app/account/addresses/page.tsx` - Address management ✅
+- `app/account/orders/page.tsx` - Order history (existed) ✅
+- `app/account/wishlist/page.tsx` - Wishlist ✅
+- `app/account/security/page.tsx` - Password & security ✅
+- `app/account/settings/page.tsx` - Account settings ✅
+- `components/account/profile-form.tsx` - Profile edit form ✅
+- `components/account/add-address-dialog.tsx` - Add address dialog ✅
+- `components/account/address-card.tsx` - Address card component ✅
+- `components/account/wishlist-item.tsx` - Wishlist item component ✅
+- `components/account/change-password-form.tsx` - Password change form ✅
+- `components/account/settings-form.tsx` - Settings form ✅
+- `app/api/account/profile/route.ts` - Profile API ✅
+- `app/api/account/addresses/route.ts` - Addresses API ✅
+- `app/api/account/addresses/[id]/route.ts` - Address update/delete API ✅
+- `app/api/account/password/route.ts` - Password change API ✅
+- `app/api/account/settings/route.ts` - Settings API ✅
+- `app/api/wishlist/[id]/route.ts` - Wishlist delete API ✅
+- `docs/TASK_12_ACCOUNT_MANAGEMENT_SUMMARY.md` - Implementation guide ✅
+
+**Status:** Core features complete (~90%). Advanced features (2FA, GDPR export, account deletion) deferred to later phases.
 
 ---
 
@@ -527,7 +541,7 @@ Create a complete product review system with ratings, comments, helpful votes, a
 
 ---
 
-### 14. Integrate Email Notifications and Templates
+### 14. Integrate Email Notifications and Templates ✅
 
 **Labels:** `feature`, `email`, `notifications`, `medium-priority`
 
@@ -536,27 +550,54 @@ Set up email service with React Email templates for order confirmations, shippin
 
 **Objectives:**
 
-- [ ] Set up email service (Resend or SendGrid)
-- [ ] Create email templates with React Email
-- [ ] Order confirmation email
-- [ ] Order shipped notification
-- [ ] Order delivered notification
-- [ ] Password reset email
-- [ ] Email verification email
-- [ ] Welcome email for new users
-- [ ] Newsletter subscription confirmation
-- [ ] Review request email (after delivery)
-- [ ] Abandoned cart reminder (optional)
-- [ ] Invoice attachment in order emails
-- [ ] Unsubscribe functionality
+- [x] Set up email service (Resend or SendGrid)
+- [x] Create email templates with React Email
+- [x] Order confirmation email
+- [x] Order shipped notification
+- [x] Order delivered notification
+- [x] Password reset email
+- [x] Email verification email
+- [x] Welcome email for new users
+- [x] Newsletter subscription confirmation
+- [x] Review request email (after delivery)
+- [x] Abandoned cart reminder (optional)
+- [x] Invoice attachment in order emails
+- [x] Unsubscribe functionality
 
-**Dependencies:**
+**Files Created:**
+
+- `lib/email.ts` - Resend configuration and email sending utility ✅
+- `lib/email-helpers.ts` - Email sending wrapper functions ✅
+- `lib/invoice-generator.tsx` - PDF invoice generation with React PDF ✅
+- `emails/components/email-layout.tsx` - Base email layout ✅
+- `emails/components/email-button.tsx` - Reusable CTA button ✅
+- `emails/order-confirmation.tsx` - Order confirmation template ✅
+- `emails/order-shipped.tsx` - Shipping notification template ✅
+- `emails/order-delivered.tsx` - Delivery confirmation template ✅
+- `emails/password-reset.tsx` - Password reset template ✅
+- `emails/email-verification.tsx` - Email verification template ✅
+- `emails/welcome.tsx` - Welcome email template ✅
+- `emails/newsletter-subscription.tsx` - Newsletter confirmation template ✅
+- `emails/review-request.tsx` - Review request template ✅
+- `emails/abandoned-cart.tsx` - Cart abandonment template ✅
+- `app/api/email/unsubscribe/route.ts` - Unsubscribe API endpoint ✅
+- `app/unsubscribe/page.tsx` - Unsubscribe management page ✅
+- `docs/TASK_14_EMAIL_SYSTEM_SUMMARY.md` - Complete documentation ✅
+
+**Integrations Completed:**
+
+- `app/api/orders/route.ts` - Send order confirmation with invoice PDF ✅
+- `app/api/admin/orders/[id]/route.ts` - Send shipped/delivered emails ✅
+- `app/api/auth/signup/route.ts` - Send welcome email on registration ✅
+- `app/api/auth/forgot-password/route.ts` - Send password reset email ✅
+
+**Dependencies Installed:**
 
 ```bash
-bun add resend
-bun add @react-email/components
-bun add react-email
+bun add resend @react-email/components react-email @react-pdf/renderer
 ```
+
+**Status:** Complete - All email notifications integrated with PDF invoice support!
 
 ---
 
@@ -750,6 +791,8 @@ bun add next-intl
 - [x] **Task 7: Update Shop Page to Fetch Data from Database** ✨
 - [x] **Task 8: Optimize Performance and SEO** ✨
 - [x] **Task 10: Setup CI/CD Pipeline and Deployment** ✨
+- [x] **Task 12: User Account and Profile Management** ✨
+- [x] **Task 14: Email Notifications and Templates** ✨
 
 ### In Progress 🔄
 
@@ -757,7 +800,13 @@ bun add next-intl
 
 ### Not Started ⏳
 
-- All tasks listed above
+- Task 13: Product Reviews and Rating System
+- Task 15: Wishlist Functionality (backend complete, frontend add/remove needed)
+- Task 16: Coupon and Discount System
+- Task 17: Update Collections Page to Database
+- Task 18: Inventory Management System
+- Task 19: Testing Suite
+- Task 20: Multi-language Support (i18n)
 
 ---
 
