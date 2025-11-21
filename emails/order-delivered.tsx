@@ -31,8 +31,8 @@ export function OrderDeliveredEmail({
       </Section>
 
       <Text style={text}>
-        We'd love to hear about your experience. Your feedback helps us improve
-        and helps other customers make informed decisions.
+        We would love to hear about your experience. Your feedback helps us
+        improve and helps other customers make informed decisions.
       </Text>
 
       <Section style={{ textAlign: 'center', marginTop: '24px' }}>
@@ -44,8 +44,8 @@ export function OrderDeliveredEmail({
       </Section>
 
       <Text style={text}>
-        If you have any issues with your order, please don't hesitate to contact
-        our support team. We are here to help!
+        If you have any issues with your order, please do not hesitate to
+        contact our support team. We are here to help!
       </Text>
 
       <Text style={text}>Thank you for choosing Snakzo!</Text>

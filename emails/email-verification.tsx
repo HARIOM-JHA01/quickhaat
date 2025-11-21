@@ -37,13 +37,13 @@ export function EmailVerificationEmail({
       </Section>
 
       <Text style={text}>
-        If the button doesn't work, copy and paste this link into your browser:
+        If the button does not work, copy and paste this link into your browser:
       </Text>
 
       <Text style={linkText}>{verificationUrl}</Text>
 
       <Text style={text}>
-        If you didn't create an account with Snakzo, you can safely ignore this
+        If you did not create an account with Snakzo, you can safely ignore this
         email.
       </Text>
     </EmailLayout>

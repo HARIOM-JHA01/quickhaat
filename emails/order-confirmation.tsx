@@ -54,7 +54,7 @@ export function OrderConfirmationEmail({
 
       <Text style={text}>
         Thank you for your order! We are getting your items ready for shipment.
-        You'll receive another email when your order has shipped.
+        You will receive another email when your order has shipped.
       </Text>
 
       <Section style={orderInfo}>

@@ -22,7 +22,7 @@ export function PasswordResetEmail({
 
       <Text style={text}>
         We received a request to reset your password for your Snakzo account. If
-        you didn't make this request, you can safely ignore this email.
+        you did not make this request, you can safely ignore this email.
       </Text>
 
       <Text style={text}>To reset your password, click the button below:</Text>
@@ -39,7 +39,7 @@ export function PasswordResetEmail({
       </Section>
 
       <Text style={text}>
-        If the button doesn't work, copy and paste this link into your browser:
+        If the button does not work, copy and paste this link into your browser:
       </Text>
 
       <Text style={linkText}>{resetUrl}</Text>

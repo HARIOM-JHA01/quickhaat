@@ -115,8 +115,9 @@ export default function CouponForm({ coupon }: CouponFormProps) {
       toast.success(coupon ? 'Coupon updated' : 'Coupon created');
       router.push('/admin/coupons');
       router.refresh();
-    } catch (error: any) {
-      toast.error(error.message);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }

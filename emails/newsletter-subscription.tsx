@@ -22,7 +22,7 @@ export function NewsletterSubscriptionEmail({
 
       <Section style={benefitsBox}>
         <Heading as="h2" style={subheading}>
-          Here's What You'll Receive:
+          What You Will Receive:
         </Heading>
 
         <Text style={listItem}>✨ Exclusive deals and promotions</Text>
