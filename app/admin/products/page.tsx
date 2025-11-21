@@ -41,8 +41,8 @@ async function getProducts(searchParams: SearchParams) {
       status === 'active'
         ? { isActive: true }
         : status === 'inactive'
-        ? { isActive: false }
-        : {},
+          ? { isActive: false }
+          : {},
     ],
   };
 
@@ -84,9 +84,8 @@ export default async function ProductsPage({
   searchParams: Promise<SearchParams>;
 }) {
   const resolvedSearchParams = await searchParams;
-  const { products, totalCount, totalPages, currentPage } = await getProducts(
-    resolvedSearchParams
-  );
+  const { products, totalCount, totalPages, currentPage } =
+    await getProducts(resolvedSearchParams);
 
   return (
     <div className="space-y-6">

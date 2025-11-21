@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,10 +9,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { User, Package, Heart, Settings, Shield } from "lucide-react";
-import { SignOutButton } from "./sign-out-button";
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { User, Package, Heart, Settings, Shield } from 'lucide-react';
+import { SignOutButton } from './sign-out-button';
 
 export function UserMenu() {
   const { data: session } = useSession();
@@ -24,12 +24,12 @@ export function UserMenu() {
   const user = session.user;
   const initials =
     user.name
-      ?.split(" ")
+      ?.split(' ')
       .map((n) => n[0])
-      .join("")
+      .join('')
       .toUpperCase() || user.email?.[0].toUpperCase();
 
-  const isAdmin = user.role === "ADMIN" || user.role === "SUPER_ADMIN";
+  const isAdmin = user.role === 'ADMIN' || user.role === 'SUPER_ADMIN';
 
   return (
     <DropdownMenu>
@@ -37,7 +37,7 @@ export function UserMenu() {
         <Avatar className="h-9 w-9">
           <AvatarImage
             src={user.image || undefined}
-            alt={user.name || "User"}
+            alt={user.name || 'User'}
           />
           <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>

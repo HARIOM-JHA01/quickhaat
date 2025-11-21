@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { ShoppingCart, Minus, Plus, Heart } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useCart } from "@/hooks/use-cart";
+import { useState } from 'react';
+import { ShoppingCart, Minus, Plus, Heart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useCart } from '@/hooks/use-cart';
 
 interface AddToCartButtonProps {
   productId: string;
@@ -40,7 +40,7 @@ export default function AddToCartButton({
 
   const handleAddToCart = async () => {
     if (!isInStock) {
-      toast.error("This item is currently unavailable.");
+      toast.error('This item is currently unavailable.');
       return;
     }
 
@@ -52,32 +52,32 @@ export default function AddToCartButton({
 
   const handleAddToWishlist = async () => {
     if (!session) {
-      toast.error("Please login to add items to your wishlist.");
-      router.push("/login");
+      toast.error('Please login to add items to your wishlist.');
+      router.push('/login');
       return;
     }
 
     setIsAddingToWishlist(true);
 
     try {
-      const response = await fetch("/api/wishlist", {
-        method: "POST",
+      const response = await fetch('/api/wishlist', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ productId }),
       });
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Failed to add to wishlist");
+        throw new Error(data.error || 'Failed to add to wishlist');
       }
 
       toast.success(`${productName} added to your wishlist.`);
     } catch (error) {
-      console.error("Error adding to wishlist:", error);
+      console.error('Error adding to wishlist:', error);
       toast.error(
-        error instanceof Error ? error.message : "Failed to add to wishlist."
+        error instanceof Error ? error.message : 'Failed to add to wishlist.'
       );
     } finally {
       setIsAddingToWishlist(false);
@@ -126,7 +126,7 @@ export default function AddToCartButton({
           size="lg"
         >
           <ShoppingCart className="mr-2 h-5 w-5" />
-          {isAddingToCart ? "Adding..." : "Add to Cart"}
+          {isAddingToCart ? 'Adding...' : 'Add to Cart'}
         </Button>
         <Button
           variant="outline"

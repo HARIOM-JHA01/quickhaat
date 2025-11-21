@@ -1,21 +1,21 @@
-import Image from "next/image";
-import Navbar from "@/components/navbar";
-import { DbProductCard } from "@/components/product/db-product-card";
-import Newsletter from "@/components/newsletter";
-import Footer from "@/components/footer";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { prisma } from "@/lib/prisma";
-import Link from "next/link";
-import { SortSelect } from "./sort-select";
+import Image from 'next/image';
+import Navbar from '@/components/navbar';
+import { DbProductCard } from '@/components/product/db-product-card';
+import Newsletter from '@/components/newsletter';
+import Footer from '@/components/footer';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { prisma } from '@/lib/prisma';
+import Link from 'next/link';
+import { SortSelect } from './sort-select';
 
 function toArray(v: string | string[] | null | undefined): string[] {
   if (!v) return [];
   if (Array.isArray(v)) return v;
-  return v.split(",").filter(Boolean);
+  return v.split(',').filter(Boolean);
 }
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default async function ShopPage({
   searchParams,
@@ -27,7 +27,7 @@ export default async function ShopPage({
   const brands = toArray(params.brands as any);
   const minPrice = Number(params.minPrice || 0);
   const maxPrice = Number(params.maxPrice || 100000);
-  const sort = (params.sort as string) || "newest";
+  const sort = (params.sort as string) || 'newest';
   const page = Math.max(1, Number(params.page || 1));
   const perPage = 12;
 
@@ -48,11 +48,11 @@ export default async function ShopPage({
   }
 
   // Build orderBy
-  let orderBy: any = [{ createdAt: "desc" }];
-  if (sort === "price_asc") orderBy = [{ price: "asc" }];
-  else if (sort === "price_desc") orderBy = [{ price: "desc" }];
-  else if (sort === "name") orderBy = [{ name: "asc" }];
-  else if (sort === "popular") orderBy = [{ reviews: { _count: "desc" } }];
+  let orderBy: any = [{ createdAt: 'desc' }];
+  if (sort === 'price_asc') orderBy = [{ price: 'asc' }];
+  else if (sort === 'price_desc') orderBy = [{ price: 'desc' }];
+  else if (sort === 'name') orderBy = [{ name: 'asc' }];
+  else if (sort === 'popular') orderBy = [{ reviews: { _count: 'desc' } }];
 
   // Fetch data
   const [total, products, categoryList, brandList] = await Promise.all([
@@ -60,7 +60,7 @@ export default async function ShopPage({
     prisma.product.findMany({
       where,
       include: {
-        images: { orderBy: { position: "asc" }, take: 1 },
+        images: { orderBy: { position: 'asc' }, take: 1 },
         category: { select: { name: true, slug: true } },
         brand: { select: { name: true } },
       },
@@ -76,7 +76,7 @@ export default async function ShopPage({
         slug: true,
         _count: { select: { products: true } },
       },
-      orderBy: { name: "asc" },
+      orderBy: { name: 'asc' },
     }),
     prisma.brand.findMany({
       where: { isActive: true },
@@ -86,7 +86,7 @@ export default async function ShopPage({
         slug: true,
         _count: { select: { products: true } },
       },
-      orderBy: { name: "asc" },
+      orderBy: { name: 'asc' },
       take: 10,
     }),
   ]);
@@ -108,7 +108,7 @@ export default async function ShopPage({
             <h1 className="text-5xl font-black leading-tight tracking-tight sm:text-6xl animate-slide-in-left">
               <span className="bg-linear-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 Discover
-              </span>{" "}
+              </span>{' '}
               Amazing Products
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto animate-slide-in-right delay-100">
@@ -125,11 +125,11 @@ export default async function ShopPage({
             <div className="flex flex-wrap gap-2">
               <Link href="/shop">
                 <Button
-                  variant={categories.length === 0 ? "default" : "outline"}
+                  variant={categories.length === 0 ? 'default' : 'outline'}
                   className={
                     categories.length === 0
-                      ? "bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0"
-                      : "hover:border-indigo-400"
+                      ? 'bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white border-0'
+                      : 'hover:border-indigo-400'
                   }
                 >
                   All Products
@@ -142,7 +142,7 @@ export default async function ShopPage({
                 const isActive = categories.includes(category.slug);
                 const search = new URLSearchParams(
                   Object.entries(params).flatMap(([k, v]) =>
-                    Array.isArray(v) ? v.map((vv) => [k, vv]) : [[k, v ?? ""]]
+                    Array.isArray(v) ? v.map((vv) => [k, vv]) : [[k, v ?? '']]
                   )
                 );
                 if (isActive) {
@@ -150,24 +150,24 @@ export default async function ShopPage({
                     (c) => c !== category.slug
                   );
                   if (filtered.length)
-                    search.set("categories", filtered.join(","));
-                  else search.delete("categories");
+                    search.set('categories', filtered.join(','));
+                  else search.delete('categories');
                 } else {
                   search.set(
-                    "categories",
-                    [...categories, category.slug].join(",")
+                    'categories',
+                    [...categories, category.slug].join(',')
                   );
                 }
-                search.delete("page");
+                search.delete('page');
 
                 return (
                   <Link key={category.id} href={`/shop?${search.toString()}`}>
                     <Button
-                      variant={isActive ? "default" : "outline"}
+                      variant={isActive ? 'default' : 'outline'}
                       className={
                         isActive
-                          ? "bg-linear-to-r from-indigo-600 to-purple-600 text-white border-0"
-                          : "hover:border-indigo-400"
+                          ? 'bg-linear-to-r from-indigo-600 to-purple-600 text-white border-0'
+                          : 'hover:border-indigo-400'
                       }
                     >
                       {category.name}
@@ -222,11 +222,11 @@ export default async function ShopPage({
                     <Link
                       href={`/shop?${new URLSearchParams(
                         Object.entries(params).flatMap(([k, v]) =>
-                          k === "page"
-                            ? [["page", String(page - 1)]]
+                          k === 'page'
+                            ? [['page', String(page - 1)]]
                             : Array.isArray(v)
-                            ? v.map((vv) => [k, vv])
-                            : [[k, v ?? ""]]
+                              ? v.map((vv) => [k, vv])
+                              : [[k, v ?? '']]
                         )
                       ).toString()}`}
                     >
@@ -242,10 +242,10 @@ export default async function ShopPage({
                           Object.entries(params).flatMap(([k, v]) =>
                             Array.isArray(v)
                               ? v.map((vv) => [k, vv])
-                              : [[k, v ?? ""]]
+                              : [[k, v ?? '']]
                           )
                         );
-                        search.set("page", String(pageNum));
+                        search.set('page', String(pageNum));
 
                         return (
                           <Link
@@ -253,12 +253,12 @@ export default async function ShopPage({
                             href={`/shop?${search.toString()}`}
                           >
                             <Button
-                              variant={pageNum === page ? "default" : "outline"}
+                              variant={pageNum === page ? 'default' : 'outline'}
                               size="sm"
                               className={
                                 pageNum === page
-                                  ? "bg-linear-to-r from-indigo-600 to-purple-600 text-white"
-                                  : ""
+                                  ? 'bg-linear-to-r from-indigo-600 to-purple-600 text-white'
+                                  : ''
                               }
                             >
                               {pageNum}
@@ -273,11 +273,11 @@ export default async function ShopPage({
                     <Link
                       href={`/shop?${new URLSearchParams(
                         Object.entries(params).flatMap(([k, v]) =>
-                          k === "page"
-                            ? [["page", String(page + 1)]]
+                          k === 'page'
+                            ? [['page', String(page + 1)]]
                             : Array.isArray(v)
-                            ? v.map((vv) => [k, vv])
-                            : [[k, v ?? ""]]
+                              ? v.map((vv) => [k, vv])
+                              : [[k, v ?? '']]
                         )
                       ).toString()}`}
                     >

@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Star, ThumbsUp } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
+import { useState } from 'react';
+import { Star, ThumbsUp } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { Badge } from '@/components/ui/badge';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 
 interface Review {
   id: string;
@@ -42,7 +42,7 @@ export default function ProductReviews({
   totalReviews,
   productId,
 }: ProductReviewsProps) {
-  const [sortBy, setSortBy] = useState<string>("recent");
+  const [sortBy, setSortBy] = useState<string>('recent');
 
   // Calculate rating distribution
   const ratingDistribution = [5, 4, 3, 2, 1].map((rating) => {
@@ -52,11 +52,11 @@ export default function ProductReviews({
   });
 
   const sortedReviews = [...reviews].sort((a, b) => {
-    if (sortBy === "recent") {
+    if (sortBy === 'recent') {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    } else if (sortBy === "highest") {
+    } else if (sortBy === 'highest') {
       return b.rating - a.rating;
-    } else if (sortBy === "lowest") {
+    } else if (sortBy === 'lowest') {
       return a.rating - b.rating;
     }
     return 0;
@@ -64,18 +64,18 @@ export default function ProductReviews({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   };
 
-  const renderStars = (rating: number, size: "sm" | "md" | "lg" = "md") => {
+  const renderStars = (rating: number, size: 'sm' | 'md' | 'lg' = 'md') => {
     const sizeClass = {
-      sm: "h-3 w-3",
-      md: "h-4 w-4",
-      lg: "h-5 w-5",
+      sm: 'h-3 w-3',
+      md: 'h-4 w-4',
+      lg: 'h-5 w-5',
     }[size];
 
     return (
@@ -86,8 +86,8 @@ export default function ProductReviews({
             className={cn(
               sizeClass,
               star <= rating
-                ? "fill-yellow-400 text-yellow-400"
-                : "fill-muted text-muted"
+                ? 'fill-yellow-400 text-yellow-400'
+                : 'fill-muted text-muted'
             )}
           />
         ))}
@@ -102,9 +102,9 @@ export default function ProductReviews({
         {/* Average Rating */}
         <div className="space-y-2">
           <div className="text-5xl font-bold">{avgRating.toFixed(1)}</div>
-          <div>{renderStars(Math.round(avgRating), "lg")}</div>
+          <div>{renderStars(Math.round(avgRating), 'lg')}</div>
           <p className="text-sm text-muted-foreground">
-            Based on {totalReviews} {totalReviews === 1 ? "review" : "reviews"}
+            Based on {totalReviews} {totalReviews === 1 ? 'review' : 'reviews'}
           </p>
         </div>
 
@@ -151,13 +151,13 @@ export default function ProductReviews({
                   <Avatar>
                     <AvatarImage src={review.user.image || undefined} />
                     <AvatarFallback>
-                      {review.user.name?.charAt(0).toUpperCase() || "U"}
+                      {review.user.name?.charAt(0).toUpperCase() || 'U'}
                     </AvatarFallback>
                   </Avatar>
                   <div>
                     <div className="flex items-center gap-2">
                       <p className="font-medium">
-                        {review.user.name || "Anonymous"}
+                        {review.user.name || 'Anonymous'}
                       </p>
                       {review.isVerified && (
                         <Badge variant="secondary" className="text-xs">

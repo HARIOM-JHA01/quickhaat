@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
-import { withRateLimit } from "@/lib/with-rate-limit";
-import { rateLimiters } from "@/lib/rate-limit";
-import { getCached, CACHE_KEYS, CACHE_TTL, invalidateCache } from "@/lib/redis";
+import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+import { withRateLimit } from '@/lib/with-rate-limit';
+import { rateLimiters } from '@/lib/rate-limit';
+import { getCached, CACHE_KEYS, CACHE_TTL, invalidateCache } from '@/lib/redis';
 
 // GET /api/cart - Get user's cart
 async function getCartHandler() {
@@ -11,7 +11,7 @@ async function getCartHandler() {
     const session = await auth();
 
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const cart = await prisma.cart.findUnique({
@@ -22,7 +22,7 @@ async function getCartHandler() {
             product: {
               include: {
                 images: {
-                  orderBy: { position: "asc" },
+                  orderBy: { position: 'asc' },
                   take: 1,
                 },
                 brand: {
@@ -47,7 +47,7 @@ async function getCartHandler() {
               product: {
                 include: {
                   images: {
-                    orderBy: { position: "asc" },
+                    orderBy: { position: 'asc' },
                     take: 1,
                   },
                   brand: {
@@ -64,9 +64,9 @@ async function getCartHandler() {
 
     return NextResponse.json(cart);
   } catch (error) {
-    console.error("Error fetching cart:", error);
+    console.error('Error fetching cart:', error);
     return NextResponse.json(
-      { error: "Failed to fetch cart" },
+      { error: 'Failed to fetch cart' },
       { status: 500 }
     );
   }
@@ -83,7 +83,7 @@ async function postCartHandler(request: NextRequest) {
     const session = await auth();
 
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const body = await request.json();
@@ -91,7 +91,7 @@ async function postCartHandler(request: NextRequest) {
 
     if (!productId) {
       return NextResponse.json(
-        { error: "Product ID is required" },
+        { error: 'Product ID is required' },
         { status: 400 }
       );
     }
@@ -103,12 +103,12 @@ async function postCartHandler(request: NextRequest) {
     });
 
     if (!product) {
-      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
 
     if (!product.isActive) {
       return NextResponse.json(
-        { error: "Product is not available" },
+        { error: 'Product is not available' },
         { status: 400 }
       );
     }
@@ -119,7 +119,7 @@ async function postCartHandler(request: NextRequest) {
       const variant = product.variants.find((v) => v.id === variantId);
       if (!variant) {
         return NextResponse.json(
-          { error: "Variant not found" },
+          { error: 'Variant not found' },
           { status: 404 }
         );
       }
@@ -128,7 +128,7 @@ async function postCartHandler(request: NextRequest) {
 
     if (availableStock < quantity) {
       return NextResponse.json(
-        { error: "Insufficient stock" },
+        { error: 'Insufficient stock' },
         { status: 400 }
       );
     }
@@ -157,7 +157,7 @@ async function postCartHandler(request: NextRequest) {
 
       if (newQuantity > availableStock) {
         return NextResponse.json(
-          { error: "Cannot add more items than available stock" },
+          { error: 'Cannot add more items than available stock' },
           { status: 400 }
         );
       }
@@ -169,7 +169,7 @@ async function postCartHandler(request: NextRequest) {
           product: {
             include: {
               images: {
-                orderBy: { position: "asc" },
+                orderBy: { position: 'asc' },
                 take: 1,
               },
               brand: {
@@ -195,7 +195,7 @@ async function postCartHandler(request: NextRequest) {
         product: {
           include: {
             images: {
-              orderBy: { position: "asc" },
+              orderBy: { position: 'asc' },
               take: 1,
             },
             brand: {
@@ -211,9 +211,9 @@ async function postCartHandler(request: NextRequest) {
 
     return NextResponse.json(cartItem, { status: 201 });
   } catch (error) {
-    console.error("Error adding to cart:", error);
+    console.error('Error adding to cart:', error);
     return NextResponse.json(
-      { error: "Failed to add item to cart" },
+      { error: 'Failed to add item to cart' },
       { status: 500 }
     );
   }
@@ -227,7 +227,7 @@ async function deleteCartHandler() {
     const session = await auth();
 
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const cart = await prisma.cart.findUnique({
@@ -235,7 +235,7 @@ async function deleteCartHandler() {
     });
 
     if (!cart) {
-      return NextResponse.json({ message: "Cart not found" }, { status: 404 });
+      return NextResponse.json({ message: 'Cart not found' }, { status: 404 });
     }
 
     // Delete all cart items
@@ -246,11 +246,11 @@ async function deleteCartHandler() {
     // Invalidate cart cache
     await invalidateCache(CACHE_KEYS.CART(session.user.id));
 
-    return NextResponse.json({ message: "Cart cleared successfully" });
+    return NextResponse.json({ message: 'Cart cleared successfully' });
   } catch (error) {
-    console.error("Error clearing cart:", error);
+    console.error('Error clearing cart:', error);
     return NextResponse.json(
-      { error: "Failed to clear cart" },
+      { error: 'Failed to clear cart' },
       { status: 500 }
     );
   }

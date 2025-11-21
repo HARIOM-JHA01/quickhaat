@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { MapPin, CreditCard, Package } from "lucide-react";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { formatPrice } from "@/lib/cart-utils";
-import { formatPhoneNumber, getEstimatedDeliveryDate } from "@/lib/order-utils";
-import type { PaymentMethod } from "./payment-step";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
+import { MapPin, CreditCard, Package } from 'lucide-react';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { formatPrice } from '@/lib/cart-utils';
+import { formatPhoneNumber, getEstimatedDeliveryDate } from '@/lib/order-utils';
+import type { PaymentMethod } from './payment-step';
 
 interface Address {
   id: string;
@@ -55,29 +55,29 @@ export default function ReviewStep({
   total,
   onBack,
 }: ReviewStepProps) {
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes] = useState('');
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const router = useRouter();
 
   const paymentMethodLabels = {
-    CASH_ON_DELIVERY: "Cash on Delivery",
-    CARD: "Credit/Debit Card",
-    STRIPE: "Online Payment",
+    CASH_ON_DELIVERY: 'Cash on Delivery',
+    CARD: 'Credit/Debit Card',
+    STRIPE: 'Online Payment',
   };
 
   const handlePlaceOrder = async () => {
     if (!address || !paymentMethod) {
-      toast.error("Missing required information");
+      toast.error('Missing required information');
       return;
     }
 
     setIsPlacingOrder(true);
 
     try {
-      const response = await fetch("/api/orders", {
-        method: "POST",
+      const response = await fetch('/api/orders', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           addressId: address.id,
@@ -88,16 +88,16 @@ export default function ReviewStep({
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Failed to place order");
+        throw new Error(data.error || 'Failed to place order');
       }
 
       const order = await response.json();
-      toast.success("Order placed successfully!");
+      toast.success('Order placed successfully!');
       router.push(`/checkout/success?orderId=${order.id}`);
     } catch (error) {
-      console.error("Error placing order:", error);
+      console.error('Error placing order:', error);
       toast.error(
-        error instanceof Error ? error.message : "Failed to place order"
+        error instanceof Error ? error.message : 'Failed to place order'
       );
     } finally {
       setIsPlacingOrder(false);
@@ -156,7 +156,7 @@ export default function ReviewStep({
           {cartItems.map((item) => (
             <div key={item.id} className="flex gap-4">
               <img
-                src={item.product.images[0]?.url || "/placeholder.png"}
+                src={item.product.images[0]?.url || '/placeholder.png'}
                 alt={item.product.name}
                 className="w-20 h-20 object-cover rounded"
               />
@@ -190,7 +190,7 @@ export default function ReviewStep({
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Shipping</span>
             <span className="font-medium">
-              {shipping === 0 ? "FREE" : formatPrice(shipping)}
+              {shipping === 0 ? 'FREE' : formatPrice(shipping)}
             </span>
           </div>
           <Separator className="my-2" />
@@ -204,7 +204,7 @@ export default function ReviewStep({
       {/* Estimated Delivery */}
       <div className="bg-green-50 border border-green-200 rounded-lg p-4">
         <p className="text-sm text-green-800">
-          <span className="font-medium">Estimated Delivery:</span>{" "}
+          <span className="font-medium">Estimated Delivery:</span>{' '}
           {getEstimatedDeliveryDate()}
         </p>
       </div>
@@ -237,7 +237,7 @@ export default function ReviewStep({
           size="lg"
           className="min-w-[200px]"
         >
-          {isPlacingOrder ? "Placing Order..." : "Place Order"}
+          {isPlacingOrder ? 'Placing Order...' : 'Place Order'}
         </Button>
       </div>
     </div>

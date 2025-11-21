@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
 // PATCH /api/cart/[id] - Update cart item quantity
 export async function PATCH(
@@ -11,7 +11,7 @@ export async function PATCH(
     const session = await auth();
 
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const { id } = await params;
@@ -20,7 +20,7 @@ export async function PATCH(
 
     if (!quantity || quantity < 1) {
       return NextResponse.json(
-        { error: "Quantity must be at least 1" },
+        { error: 'Quantity must be at least 1' },
         { status: 400 }
       );
     }
@@ -40,14 +40,14 @@ export async function PATCH(
 
     if (!cartItem) {
       return NextResponse.json(
-        { error: "Cart item not found" },
+        { error: 'Cart item not found' },
         { status: 404 }
       );
     }
 
     // Verify cart belongs to user
     if (cartItem.cart.userId !== session.user.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
     // Check stock availability
@@ -76,7 +76,7 @@ export async function PATCH(
         product: {
           include: {
             images: {
-              orderBy: { position: "asc" },
+              orderBy: { position: 'asc' },
               take: 1,
             },
             brand: {
@@ -89,9 +89,9 @@ export async function PATCH(
 
     return NextResponse.json(updatedItem);
   } catch (error) {
-    console.error("Error updating cart item:", error);
+    console.error('Error updating cart item:', error);
     return NextResponse.json(
-      { error: "Failed to update cart item" },
+      { error: 'Failed to update cart item' },
       { status: 500 }
     );
   }
@@ -106,7 +106,7 @@ export async function DELETE(
     const session = await auth();
 
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const { id } = await params;
@@ -121,14 +121,14 @@ export async function DELETE(
 
     if (!cartItem) {
       return NextResponse.json(
-        { error: "Cart item not found" },
+        { error: 'Cart item not found' },
         { status: 404 }
       );
     }
 
     // Verify cart belongs to user
     if (cartItem.cart.userId !== session.user.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
     // Delete cart item
@@ -136,11 +136,11 @@ export async function DELETE(
       where: { id },
     });
 
-    return NextResponse.json({ message: "Item removed from cart" });
+    return NextResponse.json({ message: 'Item removed from cart' });
   } catch (error) {
-    console.error("Error removing cart item:", error);
+    console.error('Error removing cart item:', error);
     return NextResponse.json(
-      { error: "Failed to remove cart item" },
+      { error: 'Failed to remove cart item' },
       { status: 500 }
     );
   }

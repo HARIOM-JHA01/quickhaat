@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { signOut } from "next-auth/react";
-import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { signOut } from 'next-auth/react';
+import { Button } from '@/components/ui/button';
+import { LogOut } from 'lucide-react';
 
 interface SignOutButtonProps {
-  variant?: "default" | "ghost" | "outline";
+  variant?: 'default' | 'ghost' | 'outline';
   className?: string;
 }
 
 export function SignOutButton({
-  variant = "ghost",
+  variant = 'ghost',
   className,
 }: SignOutButtonProps) {
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/" });
+    await signOut({ callbackUrl: '/' });
   };
 
   return (

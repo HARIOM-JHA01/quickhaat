@@ -1,8 +1,8 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { formatPrice } from "@/lib/cart-utils";
+import Link from 'next/link';
+import Image from 'next/image';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { formatPrice } from '@/lib/cart-utils';
 
 export interface DbProductCardProps {
   product: {

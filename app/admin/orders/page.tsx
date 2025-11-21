@@ -61,9 +61,8 @@ export default async function OrdersPage({
   searchParams: Promise<SearchParams>;
 }) {
   const resolvedSearchParams = await searchParams;
-  const { orders, totalCount, totalPages, currentPage } = await getOrders(
-    resolvedSearchParams
-  );
+  const { orders, totalCount, totalPages, currentPage } =
+    await getOrders(resolvedSearchParams);
 
   return (
     <div className="space-y-6">

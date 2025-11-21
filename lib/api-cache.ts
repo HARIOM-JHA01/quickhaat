@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
 export function setCacheHeaders(
   response: NextResponse,
@@ -6,7 +6,7 @@ export function setCacheHeaders(
   staleWhileRevalidate: number = 86400
 ) {
   response.headers.set(
-    "Cache-Control",
+    'Cache-Control',
     `public, s-maxage=${maxAge}, stale-while-revalidate=${staleWhileRevalidate}`
   );
   return response;
@@ -14,11 +14,11 @@ export function setCacheHeaders(
 
 export function setNoCacheHeaders(response: NextResponse) {
   response.headers.set(
-    "Cache-Control",
-    "no-store, no-cache, must-revalidate, proxy-revalidate"
+    'Cache-Control',
+    'no-store, no-cache, must-revalidate, proxy-revalidate'
   );
-  response.headers.set("Pragma", "no-cache");
-  response.headers.set("Expires", "0");
+  response.headers.set('Pragma', 'no-cache');
+  response.headers.set('Expires', '0');
   return response;
 }
 

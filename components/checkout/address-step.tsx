@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { RadioGroup } from "@/components/ui/radio-group";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { RadioGroup } from '@/components/ui/radio-group';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Plus, MapPin, Phone, Edit2, Trash2 } from "lucide-react";
-import { toast } from "sonner";
-import AddressForm from "./address-form";
-import { formatPhoneNumber } from "@/lib/order-utils";
+} from '@/components/ui/dialog';
+import { Plus, MapPin, Phone, Edit2, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
+import AddressForm from './address-form';
+import { formatPhoneNumber } from '@/lib/order-utils';
 
 interface Address {
   id: string;
@@ -49,7 +49,7 @@ export default function AddressStep({
 
   const fetchAddresses = async () => {
     try {
-      const response = await fetch("/api/addresses");
+      const response = await fetch('/api/addresses');
       if (response.ok) {
         const data = await response.json();
         setAddresses(data);
@@ -63,8 +63,8 @@ export default function AddressStep({
         }
       }
     } catch (error) {
-      console.error("Error fetching addresses:", error);
-      toast.error("Failed to load addresses");
+      console.error('Error fetching addresses:', error);
+      toast.error('Failed to load addresses');
     } finally {
       setIsLoading(false);
     }
@@ -74,7 +74,7 @@ export default function AddressStep({
     setAddresses((prev) => [...prev, address]);
     setShowAddForm(false);
     onAddressSelect(address.id);
-    toast.success("Address added successfully");
+    toast.success('Address added successfully');
   };
 
   const handleEditSuccess = (address: Address) => {
@@ -82,32 +82,32 @@ export default function AddressStep({
       prev.map((a) => (a.id === address.id ? address : a))
     );
     setEditingAddress(null);
-    toast.success("Address updated successfully");
+    toast.success('Address updated successfully');
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this address?")) {
+    if (!confirm('Are you sure you want to delete this address?')) {
       return;
     }
 
     setDeletingId(id);
     try {
       const response = await fetch(`/api/addresses/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete address");
+        throw new Error('Failed to delete address');
       }
 
       setAddresses((prev) => prev.filter((a) => a.id !== id));
       if (selectedAddressId === id) {
-        onAddressSelect(addresses[0]?.id || "");
+        onAddressSelect(addresses[0]?.id || '');
       }
-      toast.success("Address deleted successfully");
+      toast.success('Address deleted successfully');
     } catch (error) {
-      console.error("Error deleting address:", error);
-      toast.error("Failed to delete address");
+      console.error('Error deleting address:', error);
+      toast.error('Failed to delete address');
     } finally {
       setDeletingId(null);
     }
@@ -115,7 +115,7 @@ export default function AddressStep({
 
   const handleNext = () => {
     if (!selectedAddressId) {
-      toast.error("Please select a shipping address");
+      toast.error('Please select a shipping address');
       return;
     }
     onNext();
@@ -157,7 +157,7 @@ export default function AddressStep({
         </div>
       ) : (
         <RadioGroup
-          value={selectedAddressId || ""}
+          value={selectedAddressId || ''}
           onValueChange={onAddressSelect}
           className="space-y-3"
         >
@@ -166,8 +166,8 @@ export default function AddressStep({
               key={address.id}
               className={`flex items-start p-4 border-2 rounded-lg cursor-pointer transition-all ${
                 selectedAddressId === address.id
-                  ? "border-indigo-600 bg-indigo-50"
-                  : "border-gray-200 hover:border-gray-300"
+                  ? 'border-indigo-600 bg-indigo-50'
+                  : 'border-gray-200 hover:border-gray-300'
               }`}
             >
               <input

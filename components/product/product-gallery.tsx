@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Image from "next/image";
-import { ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import Image from 'next/image';
+import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface ProductImage {
   id: string;
@@ -51,8 +51,8 @@ export default function ProductGallery({
           alt={selectedImage.altText || productName}
           fill
           className={cn(
-            "object-cover transition-transform duration-300",
-            isZoomed && "scale-150 cursor-zoom-out"
+            'object-cover transition-transform duration-300',
+            isZoomed && 'scale-150 cursor-zoom-out'
           )}
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
@@ -107,10 +107,10 @@ export default function ProductGallery({
               key={image.id}
               onClick={() => setSelectedIndex(index)}
               className={cn(
-                "relative aspect-square rounded-md overflow-hidden border-2 transition-all",
+                'relative aspect-square rounded-md overflow-hidden border-2 transition-all',
                 selectedIndex === index
-                  ? "border-primary ring-2 ring-primary ring-offset-2"
-                  : "border-transparent hover:border-muted-foreground/50"
+                  ? 'border-primary ring-2 ring-primary ring-offset-2'
+                  : 'border-transparent hover:border-muted-foreground/50'
               )}
             >
               <Image

@@ -1,4 +1,4 @@
-import { Redis } from "@upstash/redis";
+import { Redis } from '@upstash/redis';
 
 // Initialize Redis client
 export const redis = Redis.fromEnv();
@@ -15,10 +15,10 @@ export const CACHE_TTL = {
 // Cache key prefixes
 export const CACHE_KEYS = {
   PRODUCT: (slug: string) => `product:${slug}`,
-  PRODUCTS_FEATURED: "products:featured",
+  PRODUCTS_FEATURED: 'products:featured',
   PRODUCTS_CATEGORY: (categoryId: string) => `products:category:${categoryId}`,
-  CATEGORIES: "categories:all",
-  CATEGORIES_TOP: "categories:top",
+  CATEGORIES: 'categories:all',
+  CATEGORIES_TOP: 'categories:top',
   CART: (cartId: string) => `cart:${cartId}`,
 } as const;
 
@@ -40,7 +40,7 @@ export async function getCached<T>(
     await redis.setex(key, ttl, data);
     return data;
   } catch (error) {
-    console.error("Redis cache error:", error);
+    console.error('Redis cache error:', error);
     // Fallback to fetcher if Redis fails
     return fetcher();
   }
@@ -55,7 +55,7 @@ export async function invalidateCache(key: string | string[]): Promise<void> {
       await redis.del(key);
     }
   } catch (error) {
-    console.error("Redis cache invalidation error:", error);
+    console.error('Redis cache invalidation error:', error);
   }
 }
 
@@ -71,6 +71,6 @@ export async function invalidateCachePattern(pattern: string): Promise<void> {
       }
     } while (cursor !== 0);
   } catch (error) {
-    console.error("Redis cache pattern invalidation error:", error);
+    console.error('Redis cache pattern invalidation error:', error);
   }
 }

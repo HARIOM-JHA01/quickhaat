@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { RadioGroup } from "@/components/ui/radio-group";
-import { CreditCard, Wallet, Banknote } from "lucide-react";
-import { toast } from "sonner";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { RadioGroup } from '@/components/ui/radio-group';
+import { CreditCard, Wallet, Banknote } from 'lucide-react';
+import { toast } from 'sonner';
 
-export type PaymentMethod = "CARD" | "STRIPE" | "CASH_ON_DELIVERY";
+export type PaymentMethod = 'CARD' | 'STRIPE' | 'CASH_ON_DELIVERY';
 
 interface PaymentStepProps {
   selectedPaymentMethod: PaymentMethod | null;
@@ -17,23 +17,23 @@ interface PaymentStepProps {
 
 const paymentMethods = [
   {
-    id: "CASH_ON_DELIVERY" as PaymentMethod,
-    name: "Cash on Delivery",
-    description: "Pay when you receive your order",
+    id: 'CASH_ON_DELIVERY' as PaymentMethod,
+    name: 'Cash on Delivery',
+    description: 'Pay when you receive your order',
     icon: Banknote,
-    badge: "Most Popular",
+    badge: 'Most Popular',
   },
   {
-    id: "CARD" as PaymentMethod,
-    name: "Credit/Debit Card",
-    description: "Pay securely with your card",
+    id: 'CARD' as PaymentMethod,
+    name: 'Credit/Debit Card',
+    description: 'Pay securely with your card',
     icon: CreditCard,
     badge: null,
   },
   {
-    id: "STRIPE" as PaymentMethod,
-    name: "Online Payment",
-    description: "Pay with UPI, Net Banking, or Wallet",
+    id: 'STRIPE' as PaymentMethod,
+    name: 'Online Payment',
+    description: 'Pay with UPI, Net Banking, or Wallet',
     icon: Wallet,
     badge: null,
   },
@@ -47,7 +47,7 @@ export default function PaymentStep({
 }: PaymentStepProps) {
   const handleNext = () => {
     if (!selectedPaymentMethod) {
-      toast.error("Please select a payment method");
+      toast.error('Please select a payment method');
       return;
     }
     onNext();
@@ -58,7 +58,7 @@ export default function PaymentStep({
       <h2 className="text-2xl font-semibold">Payment Method</h2>
 
       <RadioGroup
-        value={selectedPaymentMethod || ""}
+        value={selectedPaymentMethod || ''}
         onValueChange={(value) => onPaymentMethodSelect(value as PaymentMethod)}
         className="space-y-3"
       >
@@ -69,8 +69,8 @@ export default function PaymentStep({
               key={method.id}
               className={`flex items-start p-6 border-2 rounded-lg cursor-pointer transition-all ${
                 selectedPaymentMethod === method.id
-                  ? "border-indigo-600 bg-indigo-50"
-                  : "border-gray-200 hover:border-gray-300"
+                  ? 'border-indigo-600 bg-indigo-50'
+                  : 'border-gray-200 hover:border-gray-300'
               }`}
             >
               <input

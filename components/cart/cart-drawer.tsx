@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import Image from "next/image";
-import { X, ShoppingBag } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import Image from 'next/image';
+import { X, ShoppingBag } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
@@ -11,11 +11,11 @@ import {
   SheetTitle,
   SheetDescription,
   SheetFooter,
-} from "@/components/ui/sheet";
-import { useCart } from "@/hooks/use-cart";
-import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { formatPrice, calculateSubtotal } from "@/lib/cart-utils";
+} from '@/components/ui/sheet';
+import { useCart } from '@/hooks/use-cart';
+import { Separator } from '@/components/ui/separator';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { formatPrice, calculateSubtotal } from '@/lib/cart-utils';
 
 interface CartDrawerProps {
   open: boolean;

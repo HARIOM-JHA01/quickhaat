@@ -95,8 +95,8 @@ This comparison appears to be unintentional because the types '"neutral"' and '"
 stat.changeType === 'increase'
   ? 'text-green-600'
   : stat.changeType === 'decrease' // This never matches
-  ? 'text-red-600'
-  : 'text-gray-600';
+    ? 'text-red-600'
+    : 'text-gray-600';
 
 // After
 stat.changeType === 'increase' ? 'text-green-600' : 'text-gray-600';
@@ -220,13 +220,11 @@ bun run type-check 2>&1 | grep -E "(app/admin|components/admin)"
 ## Best Practices Applied
 
 1. **Type Safety**
-
    - Used Prisma-generated types (OrderStatus)
    - Added type guards for nullable values
    - Proper interface definitions
 
 2. **Error Handling**
-
    - Null checks before accessing nested properties
    - Filter out undefined/null values
    - Type predicates for array filtering

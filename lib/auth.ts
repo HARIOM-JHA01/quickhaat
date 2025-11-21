@@ -1,9 +1,9 @@
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import { prisma } from "@/lib/prisma";
-import bcrypt from "bcryptjs";
-import { z } from "zod";
-import type { UserRole } from "@prisma/client";
+import NextAuth from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
+import { prisma } from '@/lib/prisma';
+import bcrypt from 'bcryptjs';
+import { z } from 'zod';
+import type { UserRole } from '@prisma/client';
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -12,20 +12,20 @@ const loginSchema = z.object({
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   pages: {
-    signIn: "/login",
-    signOut: "/login",
-    error: "/login",
-    verifyRequest: "/verify-email",
+    signIn: '/login',
+    signOut: '/login',
+    error: '/login',
+    verifyRequest: '/verify-email',
   },
   providers: [
     Credentials({
-      name: "credentials",
+      name: 'credentials',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         const validatedFields = loginSchema.safeParse(credentials);
@@ -67,7 +67,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.role = user.role;
       }
 
-      if (trigger === "update" && session) {
+      if (trigger === 'update' && session) {
         token = { ...token, ...session };
       }
 

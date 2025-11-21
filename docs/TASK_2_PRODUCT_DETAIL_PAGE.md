@@ -120,7 +120,7 @@ Comprehensive product detail page with dynamic routing, image galleries, variant
 await prisma.product.findUnique({
   where: { slug, isActive: true },
   include: {
-    images: { orderBy: { position: "asc" } },
+    images: { orderBy: { position: 'asc' } },
     variants: true,
     category: {
       select: {
@@ -135,7 +135,7 @@ await prisma.product.findUnique({
       include: {
         user: { select: { id, name, image } },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
       take: 10,
     },
     _count: { select: { reviews: true } },
@@ -153,11 +153,11 @@ await prisma.product.findMany({
     NOT: { id: product.id },
   },
   include: {
-    images: { orderBy: { position: "asc" }, take: 1 },
+    images: { orderBy: { position: 'asc' }, take: 1 },
     brand: { select: { name: true } },
   },
   take: 4,
-  orderBy: { createdAt: "desc" },
+  orderBy: { createdAt: 'desc' },
 });
 ```
 

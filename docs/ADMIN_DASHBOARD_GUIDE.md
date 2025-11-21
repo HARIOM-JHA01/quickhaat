@@ -5,7 +5,6 @@
 ### Accessing the Admin Dashboard
 
 1. **Login as Admin**
-
    - Navigate to `/login`
    - Use credentials with `ADMIN` or `SUPER_ADMIN` role
    - After login, go to `/admin`
@@ -52,13 +51,11 @@
 **Actions:**
 
 1. **Search Products**
-
    - Enter search term in search bar
    - Press Enter or click Search button
    - Results update automatically
 
 2. **Add New Product** (Coming Soon)
-
    - Click "Add Product" button
    - Fill out product form
    - Upload images
@@ -66,7 +63,6 @@
    - Publish
 
 3. **Edit Product** (Coming Soon)
-
    - Click "..." menu on product row
    - Select "Edit"
    - Update product information
@@ -199,12 +195,10 @@
 ### Best Practices
 
 1. **Use Strong Passwords**
-
    - Minimum 8 characters
    - Include numbers and special characters
 
 2. **Limit Admin Access**
-
    - Only give admin role to trusted users
    - Review admin user list regularly
 
@@ -220,13 +214,11 @@
 ### Efficient Workflow
 
 1. **Dashboard First**
-
    - Start your day at `/admin` dashboard
    - Check key metrics and recent orders
    - Identify any issues quickly
 
 2. **Keyboard Shortcuts** (Future)
-
    - `Ctrl/Cmd + K` - Global search
    - `Ctrl/Cmd + P` - Add product
    - `Escape` - Close dialogs
@@ -243,17 +235,14 @@
 ### Common Issues
 
 1. **Can't Access Admin Panel**
-
    - Solution: Check if your user has admin role
    - SQL: `SELECT role FROM "User" WHERE email = 'your@email.com';`
 
 2. **Products Not Loading**
-
    - Solution: Check database connection
    - Verify Prisma is configured correctly
 
 3. **Images Not Showing**
-
    - Solution: Verify image URLs are correct
    - Check if images exist in storage
 

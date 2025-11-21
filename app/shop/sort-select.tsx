@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 interface SortSelectProps {
   sort: string;
@@ -13,11 +13,11 @@ export function SortSelect({ sort, params }: SortSelectProps) {
   const handleSortChange = (value: string) => {
     const search = new URLSearchParams(
       Object.entries(params).flatMap(([k, v]) =>
-        Array.isArray(v) ? v.map((vv) => [k, vv]) : [[k, v ?? ""]]
+        Array.isArray(v) ? v.map((vv) => [k, vv]) : [[k, v ?? '']]
       )
     );
-    search.set("sort", value);
-    search.delete("page");
+    search.set('sort', value);
+    search.delete('page');
     router.push(`/shop?${search.toString()}`);
   };
 

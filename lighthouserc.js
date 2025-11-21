@@ -2,17 +2,17 @@ module.exports = {
   ci: {
     collect: {
       numberOfRuns: 3,
-      startServerCommand: "bun run build && bun run start",
-      startServerReadyPattern: "ready on",
+      startServerCommand: 'bun run build && bun run start',
+      startServerReadyPattern: 'ready on',
       url: [
-        "http://localhost:3000",
-        "http://localhost:3000/shop",
-        "http://localhost:3000/products/organic-bananas",
-        "http://localhost:3000/cart",
-        "http://localhost:3000/search?q=organic",
+        'http://localhost:3000',
+        'http://localhost:3000/shop',
+        'http://localhost:3000/products/organic-bananas',
+        'http://localhost:3000/cart',
+        'http://localhost:3000/search?q=organic',
       ],
       settings: {
-        preset: "desktop",
+        preset: 'desktop',
         throttling: {
           rttMs: 40,
           throughputKbps: 10240,
@@ -21,21 +21,21 @@ module.exports = {
       },
     },
     assert: {
-      preset: "lighthouse:recommended",
+      preset: 'lighthouse:recommended',
       assertions: {
-        "categories:performance": ["error", { minScore: 0.8 }],
-        "categories:accessibility": ["error", { minScore: 0.9 }],
-        "categories:best-practices": ["error", { minScore: 0.9 }],
-        "categories:seo": ["error", { minScore: 0.9 }],
-        "first-contentful-paint": ["warn", { maxNumericValue: 2000 }],
-        "largest-contentful-paint": ["warn", { maxNumericValue: 2500 }],
-        "cumulative-layout-shift": ["warn", { maxNumericValue: 0.1 }],
-        "total-blocking-time": ["warn", { maxNumericValue: 300 }],
-        "speed-index": ["warn", { maxNumericValue: 3000 }],
+        'categories:performance': ['error', { minScore: 0.8 }],
+        'categories:accessibility': ['error', { minScore: 0.9 }],
+        'categories:best-practices': ['error', { minScore: 0.9 }],
+        'categories:seo': ['error', { minScore: 0.9 }],
+        'first-contentful-paint': ['warn', { maxNumericValue: 2000 }],
+        'largest-contentful-paint': ['warn', { maxNumericValue: 2500 }],
+        'cumulative-layout-shift': ['warn', { maxNumericValue: 0.1 }],
+        'total-blocking-time': ['warn', { maxNumericValue: 300 }],
+        'speed-index': ['warn', { maxNumericValue: 3000 }],
       },
     },
     upload: {
-      target: "temporary-public-storage",
+      target: 'temporary-public-storage',
     },
   },
 };

@@ -388,7 +388,6 @@ toast.loading('Processing...');
 ## Next Steps
 
 1. **Fix Collection Management:**
-
    - Remove `isFeatured` from all collection files
    - Fix TypeScript type errors in `collection-form.tsx`
    - Update edit page to not select `name` from ProductCollection
@@ -402,13 +401,11 @@ toast.loading('Processing...');
    ```
 
 3. **Create Remaining Features:**
-
    - Follow the structure above for each feature
    - Reuse patterns from existing admin pages
    - Test each feature before moving to next
 
 4. **Update Admin Sidebar:**
-
    - Add navigation links for all new pages
    - Group related features (Products, Orders, Marketing, Settings)
 

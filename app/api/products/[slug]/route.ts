@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { setCacheHeaders, CACHE_DURATIONS } from "@/lib/api-cache";
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { setCacheHeaders, CACHE_DURATIONS } from '@/lib/api-cache';
 
 export async function GET(
   request: NextRequest,
@@ -17,7 +17,7 @@ export async function GET(
       include: {
         images: {
           orderBy: {
-            position: "asc",
+            position: 'asc',
           },
         },
         variants: true,
@@ -47,7 +47,7 @@ export async function GET(
             },
           },
           orderBy: {
-            createdAt: "desc",
+            createdAt: 'desc',
           },
           take: 10,
         },
@@ -60,7 +60,7 @@ export async function GET(
     });
 
     if (!product) {
-      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
 
     // Calculate average rating
@@ -83,7 +83,7 @@ export async function GET(
           include: {
             images: {
               orderBy: {
-                position: "asc",
+                position: 'asc',
               },
               take: 1,
             },
@@ -95,7 +95,7 @@ export async function GET(
           },
           take: 4,
           orderBy: {
-            createdAt: "desc",
+            createdAt: 'desc',
           },
         })
       : [];
@@ -110,9 +110,9 @@ export async function GET(
     // Cache product data for 1 hour
     return setCacheHeaders(response, CACHE_DURATIONS.MEDIUM);
   } catch (error) {
-    console.error("Error fetching product:", error);
+    console.error('Error fetching product:', error);
     return NextResponse.json(
-      { error: "Failed to fetch product" },
+      { error: 'Failed to fetch product' },
       { status: 500 }
     );
   }

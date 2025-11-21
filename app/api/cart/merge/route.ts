@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
 // POST /api/cart/merge - Merge guest cart with user cart
 export async function POST(request: NextRequest) {
@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     const session = await auth();
 
     if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const body = await request.json();
@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     if (!Array.isArray(guestCartItems)) {
       return NextResponse.json(
-        { error: "Invalid cart items format" },
+        { error: 'Invalid cart items format' },
         { status: 400 }
       );
     }
@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
 
         mergedCount++;
       } catch (error) {
-        console.error("Error merging cart item:", error);
+        console.error('Error merging cart item:', error);
         errors.push(`Failed to merge item ${guestItem.productId}`);
       }
     }
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
             product: {
               include: {
                 images: {
-                  orderBy: { position: "asc" },
+                  orderBy: { position: 'asc' },
                   take: 1,
                 },
                 brand: {
@@ -130,9 +130,9 @@ export async function POST(request: NextRequest) {
       cart: updatedCart,
     });
   } catch (error) {
-    console.error("Error merging cart:", error);
+    console.error('Error merging cart:', error);
     return NextResponse.json(
-      { error: "Failed to merge cart" },
+      { error: 'Failed to merge cart' },
       { status: 500 }
     );
   }

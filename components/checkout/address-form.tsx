@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { toast } from "sonner";
-import { isValidIndianPostalCode, isValidIndianPhone } from "@/lib/order-utils";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { toast } from 'sonner';
+import { isValidIndianPostalCode, isValidIndianPhone } from '@/lib/order-utils';
 
 const addressSchema = z.object({
-  fullName: z.string().min(2, "Name must be at least 2 characters"),
+  fullName: z.string().min(2, 'Name must be at least 2 characters'),
   phone: z.string().refine((val) => isValidIndianPhone(val), {
-    message: "Please enter a valid 10-digit phone number",
+    message: 'Please enter a valid 10-digit phone number',
   }),
-  street: z.string().min(5, "Street address must be at least 5 characters"),
-  city: z.string().min(2, "City must be at least 2 characters"),
-  state: z.string().min(2, "State must be at least 2 characters"),
+  street: z.string().min(5, 'Street address must be at least 5 characters'),
+  city: z.string().min(2, 'City must be at least 2 characters'),
+  state: z.string().min(2, 'State must be at least 2 characters'),
   postalCode: z.string().refine((val) => isValidIndianPostalCode(val), {
-    message: "Please enter a valid 6-digit postal code",
+    message: 'Please enter a valid 6-digit postal code',
   }),
   country: z.string(),
   isDefault: z.boolean(),
@@ -52,51 +52,51 @@ export default function AddressForm({
   } = useForm<AddressFormData>({
     resolver: zodResolver(addressSchema),
     defaultValues: {
-      fullName: initialData?.fullName || "",
-      phone: initialData?.phone || "",
-      street: initialData?.street || "",
-      city: initialData?.city || "",
-      state: initialData?.state || "",
-      postalCode: initialData?.postalCode || "",
-      country: initialData?.country || "India",
+      fullName: initialData?.fullName || '',
+      phone: initialData?.phone || '',
+      street: initialData?.street || '',
+      city: initialData?.city || '',
+      state: initialData?.state || '',
+      postalCode: initialData?.postalCode || '',
+      country: initialData?.country || 'India',
       isDefault: initialData?.isDefault || false,
     },
   });
 
-  const isDefault = watch("isDefault");
+  const isDefault = watch('isDefault');
 
   const onSubmit = async (data: AddressFormData) => {
     setIsSubmitting(true);
 
     try {
-      const url = addressId ? `/api/addresses/${addressId}` : "/api/addresses";
-      const method = addressId ? "PATCH" : "POST";
+      const url = addressId ? `/api/addresses/${addressId}` : '/api/addresses';
+      const method = addressId ? 'PATCH' : 'POST';
 
       const response = await fetch(url, {
         method,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save address");
+        throw new Error('Failed to save address');
       }
 
       const address = await response.json();
       toast.success(
         addressId
-          ? "Address updated successfully"
-          : "Address added successfully"
+          ? 'Address updated successfully'
+          : 'Address added successfully'
       );
 
       if (onSuccess) {
         onSuccess(address);
       }
     } catch (error) {
-      console.error("Error saving address:", error);
-      toast.error("Failed to save address. Please try again.");
+      console.error('Error saving address:', error);
+      toast.error('Failed to save address. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -109,9 +109,9 @@ export default function AddressForm({
         <Label htmlFor="fullName">Full Name *</Label>
         <Input
           id="fullName"
-          {...register("fullName")}
+          {...register('fullName')}
           placeholder="John Doe"
-          className={errors.fullName ? "border-red-500" : ""}
+          className={errors.fullName ? 'border-red-500' : ''}
         />
         {errors.fullName && (
           <p className="text-sm text-red-500">{errors.fullName.message}</p>
@@ -123,10 +123,10 @@ export default function AddressForm({
         <Label htmlFor="phone">Phone Number *</Label>
         <Input
           id="phone"
-          {...register("phone")}
+          {...register('phone')}
           placeholder="9876543210"
           type="tel"
-          className={errors.phone ? "border-red-500" : ""}
+          className={errors.phone ? 'border-red-500' : ''}
         />
         {errors.phone && (
           <p className="text-sm text-red-500">{errors.phone.message}</p>
@@ -138,9 +138,9 @@ export default function AddressForm({
         <Label htmlFor="street">Street Address *</Label>
         <Input
           id="street"
-          {...register("street")}
+          {...register('street')}
           placeholder="House/Flat No., Building Name, Street Name"
-          className={errors.street ? "border-red-500" : ""}
+          className={errors.street ? 'border-red-500' : ''}
         />
         {errors.street && (
           <p className="text-sm text-red-500">{errors.street.message}</p>
@@ -153,9 +153,9 @@ export default function AddressForm({
           <Label htmlFor="city">City *</Label>
           <Input
             id="city"
-            {...register("city")}
+            {...register('city')}
             placeholder="Mumbai"
-            className={errors.city ? "border-red-500" : ""}
+            className={errors.city ? 'border-red-500' : ''}
           />
           {errors.city && (
             <p className="text-sm text-red-500">{errors.city.message}</p>
@@ -166,9 +166,9 @@ export default function AddressForm({
           <Label htmlFor="state">State *</Label>
           <Input
             id="state"
-            {...register("state")}
+            {...register('state')}
             placeholder="Maharashtra"
-            className={errors.state ? "border-red-500" : ""}
+            className={errors.state ? 'border-red-500' : ''}
           />
           {errors.state && (
             <p className="text-sm text-red-500">{errors.state.message}</p>
@@ -182,9 +182,9 @@ export default function AddressForm({
           <Label htmlFor="postalCode">Postal Code *</Label>
           <Input
             id="postalCode"
-            {...register("postalCode")}
+            {...register('postalCode')}
             placeholder="400001"
-            className={errors.postalCode ? "border-red-500" : ""}
+            className={errors.postalCode ? 'border-red-500' : ''}
           />
           {errors.postalCode && (
             <p className="text-sm text-red-500">{errors.postalCode.message}</p>
@@ -195,7 +195,7 @@ export default function AddressForm({
           <Label htmlFor="country">Country</Label>
           <Input
             id="country"
-            {...register("country")}
+            {...register('country')}
             value="India"
             disabled
             className="bg-gray-50"
@@ -209,7 +209,7 @@ export default function AddressForm({
           id="isDefault"
           checked={isDefault}
           onCheckedChange={(checked) =>
-            setValue("isDefault", checked as boolean)
+            setValue('isDefault', checked as boolean)
           }
         />
         <Label htmlFor="isDefault" className="cursor-pointer">
@@ -222,11 +222,11 @@ export default function AddressForm({
         <Button type="submit" disabled={isSubmitting} className="flex-1">
           {isSubmitting
             ? addressId
-              ? "Updating..."
-              : "Adding..."
+              ? 'Updating...'
+              : 'Adding...'
             : addressId
-            ? "Update Address"
-            : "Add Address"}
+              ? 'Update Address'
+              : 'Add Address'}
         </Button>
         {onCancel && (
           <Button
