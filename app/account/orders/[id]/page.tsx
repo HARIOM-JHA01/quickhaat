@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import type { OrderStatus, PaymentStatus } from '@prisma/client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -32,8 +34,8 @@ import {
 interface OrderDetails {
   id: string;
   orderNumber: string;
-  status: string;
-  paymentStatus: string;
+  status: OrderStatus;
+  paymentStatus: PaymentStatus;
   paymentMethod: string;
   subtotal: number;
   tax: number;
@@ -171,7 +173,7 @@ export default function OrderDetailPage({
     );
   }
 
-  const orderProgress = getOrderProgress(order.status as any);
+  const orderProgress = getOrderProgress(order.status as OrderStatus);
 
   return (
     <div>
@@ -195,13 +197,15 @@ export default function OrderDetailPage({
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Badge className={getOrderStatusColor(order.status as any)}>
-              {getOrderStatusLabel(order.status as any)}
+            <Badge className={getOrderStatusColor(order.status as OrderStatus)}>
+              {getOrderStatusLabel(order.status as OrderStatus)}
             </Badge>
             <Badge
-              className={getPaymentStatusColor(order.paymentStatus as any)}
+              className={getPaymentStatusColor(
+                order.paymentStatus as PaymentStatus
+              )}
             >
-              {getPaymentStatusLabel(order.paymentStatus as any)}
+              {getPaymentStatusLabel(order.paymentStatus as PaymentStatus)}
             </Badge>
           </div>
         </div>
@@ -319,9 +323,11 @@ export default function OrderDetailPage({
               className="border-b pb-4 last:border-b-0 flex gap-4"
             >
               <Link href={`/products/${item.product.slug}`}>
-                <img
+                <Image
                   src={item.product.images[0]?.url || '/placeholder.png'}
                   alt={item.name}
+                  width={96}
+                  height={96}
                   className="h-24 w-24 cursor-pointer rounded object-cover transition-opacity hover:opacity-80"
                 />
               </Link>

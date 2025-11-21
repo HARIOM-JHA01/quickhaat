@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import Navbar from '@/components/navbar';
 import Hero from '@/components/hero';
-import { DbProductCard } from '@/components/product/db-product-card';
+import {
+  DbProductCard,
+  DbProductCardProps,
+} from '@/components/product/db-product-card';
 import Newsletter from '@/components/newsletter';
 import Footer from '@/components/footer';
 import { Button } from '@/components/ui/button';
@@ -172,7 +175,9 @@ export default async function Home() {
                 key={product.id}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <DbProductCard product={product as any} />
+                <DbProductCard
+                  product={product as DbProductCardProps['product']}
+                />
               </div>
             ))}
           </div>

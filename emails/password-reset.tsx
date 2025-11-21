@@ -47,7 +47,7 @@ export function PasswordResetEmail({
       <Text style={text}>For security reasons, we recommend that you:</Text>
 
       <Text style={listItem}>• Use a strong, unique password</Text>
-      <Text style={listItem}>• Don't share your password with anyone</Text>
+      <Text style={listItem}>• Do not share your password with anyone</Text>
       <Text style={listItem}>
         • Enable two-factor authentication (when available)
       </Text>

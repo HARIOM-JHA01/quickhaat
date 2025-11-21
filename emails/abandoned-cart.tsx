@@ -29,7 +29,7 @@ export function AbandonedCartEmail({
       <Text style={text}>Hi {customerName},</Text>
 
       <Text style={text}>
-        We noticed you left some items in your cart. Don't miss out on these
+        We noticed you left some items in your cart. Do not miss out on these
         great products!
       </Text>
 

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import type { Coupon } from '@prisma/client';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -49,7 +50,7 @@ const couponSchema = z.object({
 type CouponFormValues = z.infer<typeof couponSchema>;
 
 interface CouponFormProps {
-  coupon?: any;
+  coupon?: Coupon | null;
 }
 
 export default function CouponForm({ coupon }: CouponFormProps) {
@@ -63,9 +64,9 @@ export default function CouponForm({ coupon }: CouponFormProps) {
       description: coupon?.description || '',
       type: coupon?.type || 'PERCENTAGE',
       value: coupon?.value || 0,
-      minPurchase: coupon?.minPurchase || ('' as any),
-      maxDiscount: coupon?.maxDiscount || ('' as any),
-      usageLimit: coupon?.usageLimit || ('' as any),
+      minPurchase: coupon?.minPurchase ?? '',
+      maxDiscount: coupon?.maxDiscount ?? '',
+      usageLimit: coupon?.usageLimit ?? '',
       startDate: coupon?.startDate
         ? new Date(coupon.startDate).toISOString().slice(0, 16)
         : '',

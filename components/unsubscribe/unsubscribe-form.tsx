@@ -214,9 +214,9 @@ export default function UnsubscribeForm() {
 
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <p className="text-sm text-blue-900">
-              <strong>Note:</strong> You'll still receive important
+              <strong>Note:</strong> You will still receive important
               transactional emails like order confirmations and shipping
-              updates. These cannot be turned off as they're essential for your
+              updates. These cannot be turned off as they are essential for your
               orders.
             </p>
           </div>

@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { ChevronRight, Share2, Package, Shield, Truck } from 'lucide-react';
 import { prisma } from '@/lib/prisma';
 import ProductGallery from '@/components/product/product-gallery';
-import VariantSelector from '@/components/product/variant-selector';
+import VariantSelector, {
+  ProductVariant as VariantSelectorProduct,
+} from '@/components/product/variant-selector';
 import AddToCartButton from '@/components/product/add-to-cart-button';
 import ProductReviews from '@/components/product/product-reviews';
 import RelatedProducts from '@/components/product/related-products';
@@ -362,7 +364,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {/* Variants */}
             {product.variants.length > 0 && (
               <VariantSelector
-                variants={product.variants as any}
+                variants={
+                  product.variants.map((v) => ({
+                    id: v.id,
+                    name: v.name,
+                    sku: v.sku,
+                    price: v.price,
+                    quantity: v.quantity,
+                    options: (v.options as Record<string, string>) || {},
+                  })) as VariantSelectorProduct[]
+                }
                 basePrice={product.price}
               />
             )}

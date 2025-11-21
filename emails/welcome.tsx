@@ -15,7 +15,7 @@ export function WelcomeEmail({ customerName }: WelcomeEmailProps) {
       <Text style={text}>Hi {customerName},</Text>
 
       <Text style={text}>
-        Thank you for joining Snakzo! We're thrilled to have you as part of our
+        Thank you for joining Snakzo! We are thrilled to have you as part of our
         community. Get ready to discover amazing products and enjoy a seamless
         shopping experience.
       </Text>

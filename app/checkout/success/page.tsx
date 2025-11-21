@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState, Suspense } from 'react';
+import Image from 'next/image';
+import type { PaymentStatus, OrderStatus } from '@prisma/client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -24,8 +26,8 @@ import {
 interface OrderDetails {
   id: string;
   orderNumber: string;
-  status: string;
-  paymentStatus: string;
+  status: OrderStatus;
+  paymentStatus: PaymentStatus;
   paymentMethod: string;
   subtotal: number;
   tax: number;
@@ -124,7 +126,7 @@ function OrderSuccessContent() {
             Order Placed Successfully!
           </h1>
           <p className="text-gray-600 mb-4">
-            Thank you for your order. We'll send you a confirmation email
+            Thank you for your order. We will send you a confirmation email
             shortly.
           </p>
           <div className="inline-block bg-gray-100 px-6 py-3 rounded-lg">
@@ -172,13 +174,13 @@ function OrderSuccessContent() {
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Payment Status</span>
                 <span className="font-medium text-yellow-600">
-                  {getPaymentStatusLabel(order.paymentStatus as any)}
+                  {getPaymentStatusLabel(order.paymentStatus as PaymentStatus)}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-600">Order Status</span>
                 <span className="font-medium text-green-600">
-                  {getOrderStatusLabel(order.status as any)}
+                  {getOrderStatusLabel(order.status as OrderStatus)}
                 </span>
               </div>
             </div>
@@ -217,9 +219,11 @@ function OrderSuccessContent() {
                 key={item.id}
                 className="flex gap-4 pb-4 border-b last:border-b-0"
               >
-                <img
+                <Image
                   src={item.product.images[0]?.url || '/placeholder.png'}
                   alt={item.name}
+                  width={80}
+                  height={80}
                   className="w-20 h-20 object-cover rounded"
                 />
                 <div className="flex-1">

@@ -24,7 +24,7 @@ export function ReviewRequestEmail({
       <Text style={text}>Hi {customerName},</Text>
 
       <Text style={text}>
-        We hope you're enjoying your recent purchase! Your feedback is
+        We hope you are enjoying your recent purchase! Your feedback is
         incredibly valuable to us and helps other customers make informed
         decisions.
       </Text>

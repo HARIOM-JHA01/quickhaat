@@ -122,7 +122,7 @@ export default async function AdminDashboard() {
       <div>
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <p className="text-gray-500">
-          Welcome back! Here's what's happening with your store.
+          Welcome back! Here is what is happening with your store.
         </p>
       </div>
 

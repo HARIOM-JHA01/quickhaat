@@ -53,7 +53,7 @@ export function OrderConfirmationEmail({
       <Text style={text}>Hi {customerName},</Text>
 
       <Text style={text}>
-        Thank you for your order! We're getting your items ready for shipment.
+        Thank you for your order! We are getting your items ready for shipment.
         You'll receive another email when your order has shipped.
       </Text>
 

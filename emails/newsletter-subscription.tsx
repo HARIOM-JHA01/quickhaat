@@ -10,13 +10,13 @@ export function NewsletterSubscriptionEmail({
   customerName,
 }: NewsletterSubscriptionEmailProps) {
   return (
-    <EmailLayout preview="You're subscribed to Snakzo newsletter!">
+    <EmailLayout preview="You are subscribed to Snakzo newsletter!">
       <Heading style={heading}>📧 Newsletter Subscription Confirmed!</Heading>
 
       <Text style={text}>Hi {customerName},</Text>
 
       <Text style={text}>
-        Thank you for subscribing to the Snakzo newsletter! You're now part of
+        Thank you for subscribing to the Snakzo newsletter! You are now part of
         our exclusive community.
       </Text>
 

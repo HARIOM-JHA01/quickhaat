@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import type { OrderStatus, PaymentStatus } from '@prisma/client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -15,8 +17,8 @@ import {
 interface Order {
   id: string;
   orderNumber: string;
-  status: string;
-  paymentStatus: string;
+  status: OrderStatus;
+  paymentStatus: PaymentStatus;
   total: number;
   createdAt: string;
   items: {
@@ -111,8 +113,12 @@ export default function OrdersPage() {
                     <h3 className="text-lg font-semibold">
                       Order #{order.orderNumber}
                     </h3>
-                    <Badge className={getOrderStatusColor(order.status as any)}>
-                      {getOrderStatusLabel(order.status as any)}
+                    <Badge
+                      className={getOrderStatusColor(
+                        order.status as OrderStatus
+                      )}
+                    >
+                      {getOrderStatusLabel(order.status as OrderStatus)}
                     </Badge>
                   </div>
                   <p className="text-sm text-gray-600">
@@ -139,9 +145,11 @@ export default function OrdersPage() {
               <div className="flex gap-2 overflow-x-auto pb-2">
                 {order.items.slice(0, 5).map((item, index) => (
                   <div key={index} className="shrink-0">
-                    <img
+                    <Image
                       src={item.product.images[0]?.url || '/placeholder.png'}
                       alt={item.product.name}
+                      width={64}
+                      height={64}
                       className="h-16 w-16 rounded border object-cover"
                     />
                   </div>

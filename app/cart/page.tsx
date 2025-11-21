@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { ShoppingBag, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useCart } from "@/hooks/use-cart";
-import CartItem from "@/components/cart/cart-item";
-import CartSummary from "@/components/cart/cart-summary";
-import { Separator } from "@/components/ui/separator";
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { ShoppingBag, ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useCart } from '@/hooks/use-cart';
+import CartItem from '@/components/cart/cart-item';
+import CartSummary from '@/components/cart/cart-summary';
+import { Separator } from '@/components/ui/separator';
 
 export default function CartPage() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function CartPage() {
           </div>
           <h1 className="text-3xl font-bold mb-4">Your cart is empty</h1>
           <p className="text-muted-foreground mb-8">
-            Looks like you haven't added anything to your cart yet. Start
+            It looks like you have not added anything to your cart yet. Start
             shopping to fill it up!
           </p>
           <Button asChild size="lg">
@@ -61,7 +61,7 @@ export default function CartPage() {
           </Button>
           <h1 className="text-4xl font-bold">Shopping Cart</h1>
           <p className="text-muted-foreground mt-2">
-            {items.length} {items.length === 1 ? "item" : "items"} in your cart
+            {items.length} {items.length === 1 ? 'item' : 'items'} in your cart
           </p>
         </div>
 
@@ -76,7 +76,7 @@ export default function CartPage() {
                   size="sm"
                   className="text-destructive hover:text-destructive"
                   onClick={() => {
-                    if (confirm("Are you sure you want to clear your cart?")) {
+                    if (confirm('Are you sure you want to clear your cart?')) {
                       clearCart();
                     }
                   }}
@@ -107,7 +107,7 @@ export default function CartPage() {
             <div className="sticky top-8">
               <CartSummary
                 items={items}
-                onCheckout={() => router.push("/checkout")}
+                onCheckout={() => router.push('/checkout')}
               />
 
               {/* Help Section */}

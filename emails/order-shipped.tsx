@@ -90,7 +90,7 @@ export function OrderShippedEmail({
 
       <Text style={text}>
         Thanks for shopping with us! If you have any questions about your
-        shipment, please don't hesitate to contact us.
+        shipment, please do not hesitate to contact us.
       </Text>
     </EmailLayout>
   );

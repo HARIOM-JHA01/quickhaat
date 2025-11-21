@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
-interface ProductVariant {
+export interface ProductVariant {
   id: string;
   name: string;
   sku: string | null;

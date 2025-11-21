@@ -45,7 +45,7 @@ export function OrderDeliveredEmail({
 
       <Text style={text}>
         If you have any issues with your order, please don't hesitate to contact
-        our support team. We're here to help!
+        our support team. We are here to help!
       </Text>
 
       <Text style={text}>Thank you for choosing Snakzo!</Text>

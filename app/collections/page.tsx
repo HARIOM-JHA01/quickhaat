@@ -210,7 +210,7 @@ export default function CollectionsPage() {
                 🌟 Seasonal Spotlight
               </Badge>
               <h2 className="text-4xl sm:text-5xl font-bold">
-                This Season's
+                This Season
                 <br />
                 <span className="bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                   Must-Have Collection

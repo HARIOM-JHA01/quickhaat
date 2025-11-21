@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import { Truck } from "lucide-react";
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
+import { Truck } from 'lucide-react';
 import {
   calculateSubtotal,
   calculateTax,
@@ -13,7 +13,7 @@ import {
   isFreeShippingEligible,
   amountNeededForFreeShipping,
   formatPrice,
-} from "@/lib/cart-utils";
+} from '@/lib/cart-utils';
 
 interface CartSummaryProps {
   items: any[];
@@ -66,7 +66,7 @@ export default function CartSummary({
           <div className="flex items-center gap-3">
             <Truck className="h-5 w-5 text-green-600" />
             <p className="text-sm font-medium text-green-900 dark:text-green-100">
-              Congratulations! You've qualified for FREE shipping 🎉
+              Congratulations! You have qualified for FREE shipping 🎉
             </p>
           </div>
         </div>
