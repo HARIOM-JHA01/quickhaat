@@ -37,12 +37,10 @@ export default async function SearchPage({
   const page = Math.max(1, Number(params.page || 1));
   const perPage = Math.min(48, Math.max(12, Number(params.perPage || 24)));
 
-  const where: Prisma.ProductWhereInput = {
-    isActive: true,
-    AND: [],
-  };
+  const where: Prisma.ProductWhereInput = { isActive: true };
+  const and: Prisma.ProductWhereInput[] = [];
   if (q) {
-    where.AND.push({
+    and.push({
       OR: [
         { name: { contains: q, mode: 'insensitive' } },
         { description: { contains: q, mode: 'insensitive' } },
@@ -51,17 +49,21 @@ export default async function SearchPage({
     });
   }
   if (categories.length) {
-    where.AND.push({ category: { slug: { in: categories } } });
+    and.push({ category: { slug: { in: categories } } });
   }
   if (brands.length) {
-    where.AND.push({ brand: { slug: { in: brands } } });
+    and.push({ brand: { slug: { in: brands } } });
   }
   if (minPrice > 0 || maxPrice < 10000) {
-    where.AND.push({ price: { gte: minPrice || 0, lte: maxPrice || 10000 } });
+    and.push({ price: { gte: minPrice || 0, lte: maxPrice || 10000 } });
   }
   if (rating > 0) {
     // approximate: at least one review >= rating
-    where.AND.push({ reviews: { some: { rating: { gte: rating } } } });
+    and.push({ reviews: { some: { rating: { gte: rating } } } });
+  }
+
+  if (and.length > 0) {
+    where.AND = and;
   }
 
   let orderBy: Prisma.ProductOrderByWithRelationInput[] = [
