@@ -64,9 +64,15 @@ export default function SalesChart() {
               labelFormatter={(value) =>
                 format(new Date(value as string), 'MMM d, yyyy')
               }
-              formatter={(value: number, name: string) => {
+              formatter={(
+                value: number | undefined,
+                name: string | undefined
+              ) => {
                 if (name === 'revenue') {
-                  return [`$${value.toFixed(2)}`, 'Revenue'];
+                  if (typeof value === 'number') {
+                    return [`$${value.toFixed(2)}`, 'Revenue'];
+                  }
+                  return ['-', 'Revenue'];
                 }
                 return [value, 'Orders'];
               }}
